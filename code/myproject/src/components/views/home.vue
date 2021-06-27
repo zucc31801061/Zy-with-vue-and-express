@@ -20,9 +20,9 @@
 			</div>
 		</div>
 		<div class="myinput">
-			<el-input placeholder="请输入内容">
+			<el-input placeholder="请输入内容" v-model="search">
 				<template #append>
-					<el-button icon="el-icon-search"></el-button>
+					<el-button icon="el-icon-search" @click="searchme"></el-button>
 				</template>
 			</el-input>
 		</div>
@@ -77,11 +77,17 @@
 				newsList: [],
 				productList: [],
 				encyclopediasList: [],
-				contentList: []
+				contentList: [],
+				search: ''
 			};
 		},
 		methods: {
-
+			searchme(){
+				this.axios.get("http://localhost:3000/encyclopedia/search?name="+this.search).then(
+					res => {
+						this.encyclopediasList = res.data.list;
+					});
+			}
 		},
 		created() {
 			this.axios.get("http://localhost:3000/article/list").then(

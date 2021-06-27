@@ -64,18 +64,31 @@
 			handlelogin(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						this.axios.get("http://localhost:3000/users/select?username="+this.Form.id).then(
+						this.axios.get("http://localhost:3000/users/select?username=" + this.Form.id).then(
 							res => {
-								var user = res.data.list[0];
-								if(user.pwd==this.Form.pwd){
-									localStorage.setItem("user", JSON.stringify(user));
-									this.$router.push({
-										path: '/home',
+								console.log(res.data);
+								if (res.data.code == 200) {
+									var user = res.data.list[0];
+									if (user.pwd == this.Form.pwd) {
+										localStorage.setItem("user", JSON.stringify(user));
+										this.$router.push({
+											path: '/home',
+										});
+										this.$message({
+											type: 'success',
+											message: '登录成功'
+										});
+									} else {
+										this.$message({
+											type: 'error',
+											message: '密码错误'
+										});
+									}
+								} else {
+									this.$message({
+										type: 'error',
+										message: '用户名错误'
 									});
-									console.log("true");
-								}
-								else{
-									console.log("false");
 								}
 							});
 					} else {

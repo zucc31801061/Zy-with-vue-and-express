@@ -6,5 +6,6 @@ router.get('/list', encyclopedia.getEncyList);
 router.get('/select', encyclopedia.getEncy);
 router.get('/detail', encyclopedia.getEncyDetail);
 router.get('/detailList', encyclopedia.getEncyDetailList);
+router.get('/search', encyclopedia.searchEncy);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 var dbConfig = require("../util/dbconfig");
 
-
 //用户获取
 getByUsername = (req, res) => {
   let { username } = req.query;
@@ -8,17 +7,21 @@ getByUsername = (req, res) => {
   var sqlArr = [username];
   var callBack = (err, data) => {
     if (err) {
-      console.log("该用户不存在");
-      res.send({
-        code: 400,
-        msg: "该用户不存在",
-      });
+      console.log("寻找有误");
     } else {
-      res.send({
-        code: 200,
-        msg: "已找到该用户",
-        list: data,
-      });
+      if (data.length != 0) {
+        res.send({
+          code: 200,
+          msg: "已找到该用户",
+          list: data,
+        });
+      } else {
+        res.send({
+          code: 400,
+          msg: "该用户不存在",
+          list: data,
+        });
+      }
     }
   };
   dbConfig.sqlConnect(sql, sqlArr, callBack);
@@ -50,5 +53,5 @@ register = (req, res) => {
 
 module.exports = {
   getByUsername,
-  register
+  register,
 };

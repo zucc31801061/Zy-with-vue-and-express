@@ -63,3 +63,9 @@
 		overflow: hidden;
 	}
 </style>
+
+<style>
+	.el-message{
+		min-width: 0;
+	}
+</style>
