@@ -31,7 +31,6 @@
 <script>
 	import shop1 from '../sub/shop1.vue'
 	import shop2 from '../sub/shop2.vue'
-	import product_data from '../../data/product.js';
 
 	export default {
 		name: 'shop',
@@ -41,14 +40,18 @@
 		},
 		data() {
 			return {
-				productList: null
+				productList: []
 			};
 		},
 		methods: {
-
+			
 		},
 		created() {
-			this.productList = product_data
+			this.axios.get("http://localhost:3000/product/list").then(
+				res => {
+					this.productList = res.data.list;
+					console.log(this.productList);
+				})
 		}
 	}
 </script>

@@ -2,12 +2,12 @@
 	<div class="encyclopedias">
 		<div class="e-item" @click="gotoDetail(encyclopedias.id)">
 			<div class="e-img">
-				<img :src="encyclopedias.img" alt="图片丢失">
+				<img :src="getpath(encyclopedias.img)" alt="图片丢失">
 			</div>
 			<div class="info">
 				<div class="e-name">{{ encyclopedias && encyclopedias.name }}</div>
 				<div class="e-content">
-					{{ encyclopedias.content[0].length>18?encyclopedias.content[0].substr(2, 18)+'...':encyclopedias.content[0] }}
+					{{ forcontent(encyclopedias.id) }}
 				</div>
 			</div>
 		</div>
@@ -18,13 +18,26 @@
 	export default {
 		name: 'encyclopedias',
 		props: {
-			encyclopedias: Object
+			encyclopedias: Object,
+			contentList: Array
 		},
 		methods: {
-			gotoDetail(id){
+			gotoDetail(id) {
 				this.$router.push('/medicinedetail/' + id)
+			},
+			getpath(img) {
+				return require('@/imgs/' + img);
+			},
+			forcontent(id){
+				console.log("id:"+id);
+				for(let content in this.contentList){
+					if(id==this.contentList[content].ency_id){
+						let result = this.contentList[content].section.length>18?this.contentList[content].section.substr(2,18):this.contentList[content].section;
+						return result+"...";
+					}
+				}
 			}
-		}
+		},
 	}
 </script>
 

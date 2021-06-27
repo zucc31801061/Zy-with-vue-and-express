@@ -1,13 +1,13 @@
 <template>
 	<div class="medicinepage">
 		<div class="back" @click="back()"><u>返回上一页></u></div>
-		<div class="medicinedetail" v-for="item in this.medicineList" v-if="$route.params.id == item.id">
-			<div class="name">{{ item && item.name }}</div>
+		<div class="medicinedetail">
+			<div class="name">{{ encyclopedias && encyclopedias.name }}</div>
 			<div class="img">
-				<img :src="item.img" alt="">
+				<img :src="getpath(encyclopedias.img)" alt="">
 			</div>
 			<div class="content">
-				<p v-for="p in item.content">{{ p }}</p><br>
+				<p v-for="p in contentList">{{ p.section }}</p><br>
 			</div>
 		</div>
 		<div class="back" @click="back()"><u>返回上一页></u></div>
@@ -16,22 +16,33 @@
 </template>
 
 <script>
-	import medicine_data from '../../data/encyclopedias.js';
-
 	export default {
 		name: 'medicinepage',
 		data() {
 			return {
-				medicineList:null 
+				encyclopedias: {},
+				contentList: []
 			};
 		},
 		methods:{
 			back(){
 				this.$router.go(-1);
+			},
+			getpath(img) {
+				return require('@/imgs/' + img);
 			}
 		},
 		created() {
-			this.medicineList = medicine_data
+			this.axios.get("http://localhost:3000/encyclopedia/select?id="+this.$route.params.id).then(
+				res => {
+					this.encyclopedias = res.data.list[0];
+					console.log(this.encyclopedias);
+				});
+			this.axios.get("http://localhost:3000/encyclopedia/detail?id="+this.$route.params.id).then(
+				res => {
+					this.contentList = res.data.list;
+					console.log(this.contentList);
+				});
 		}
 	}
 </script>

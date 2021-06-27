@@ -6,6 +6,8 @@ var cookieParser = require("cookie-parser");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var articleRouter = require("./routes/article");
+var productRouter = require("./routes/product");
+var encyclopediaRouter = require("./routes/encyclopedia");
 
 var app = express();
 
@@ -30,5 +32,7 @@ app.all("*", function (req, res, next) {
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/article", articleRouter);
+app.use("/product", productRouter);
+app.use("/encyclopedia", encyclopediaRouter);
 
 server.listen(3000);

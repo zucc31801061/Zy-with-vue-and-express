@@ -4,7 +4,7 @@
 			<i class="el-icon-s-management zxi"></i>
 			<div class="lt">中医资讯</div>
 		</div>
-		<newslist v-for="news in newsList.list" :key="news.id" :news="news"></newslist>
+		<newslist v-for="news in newsList" :key="news.id" :news="news"></newslist>
 		<div class="info">
 			<div class="copyrignt">&copy; 2021 移动应用交互设计 zucc 31801061 王灵霜</div>
 		</div>
@@ -22,13 +22,13 @@
 		},
 		data() {
 			return {
-				newsList: {}
+				newsList: []
 			};
 		},
 		created() {
 			this.axios.get("http://localhost:3000/article/list").then(
 				res => {
-					this.newsList = res.data;
+					this.newsList = res.data.list;
 					console.log(this.newsList);
 				})
 		}

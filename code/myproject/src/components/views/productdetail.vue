@@ -3,9 +3,9 @@
 		<div class="ptopbar">
 			<i class="el-icon-caret-left back" @click="back()"></i>
 		</div>
-		<div class="productdetail" v-for="item in this.productsList" v-if="$route.params.id == item.id">
+		<div class="productdetail" v-for="item in this.productList" v-if="$route.params.id == item.id">
 			<div class="pimg">
-				<img :src="item.img" aplt="图片丢失">
+				<img :src="getpath(item.img)" alt="图片丢失">
 			</div>
 			<div class="pinfo">
 				<div class="pprice">￥{{item.price}}</div>
@@ -18,7 +18,7 @@
 			<div class="plt">其他推荐</div>
 		</div>
 		<div class="precommend">
-			<shop2 v-for="product in productsList" v-if="$route.params.id != product.id" :key="product.id"
+			<shop2 v-for="product in productList" v-if="$route.params.id != product.id" :key="product.id"
 				:product="product"></shop2>
 		</div>
 		<div class="pnavbar">
@@ -43,7 +43,6 @@
 
 <script>
 	import shop2 from '../sub/shop2.vue'
-	import product_data from '../../data/product.js';
 
 	export default {
 		name: 'productpage',
@@ -52,7 +51,7 @@
 		},
 		data() {
 			return {
-				productsList: null
+				productList: []
 			};
 		},
 		methods: {
@@ -66,10 +65,17 @@
 			goshop() {
 				this.$router.push('/shop/')
 
+			},
+			getpath(img) {
+				return require('@/imgs/' + img);
 			}
 		},
 		created() {
-			this.productsList = product_data
+			this.axios.get("http://localhost:3000/product/list").then(
+				res => {
+					this.productList = res.data.list;
+					console.log(this.productList);
+				})
 		}
 	}
 </script>

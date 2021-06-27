@@ -32,7 +32,7 @@
 		</div>
 		<div class="bk">
 			<encyclopedias v-for="encyclopedias in encyclopediasList" :key="encyclopedias.id"
-				:encyclopedias="encyclopedias"></encyclopedias>
+				:encyclopedias="encyclopedias" :contentList="contentList"></encyclopedias>
 		</div>
 		<div class="title">
 			<i class="el-icon-s-shop rmi"></i>
@@ -61,11 +61,8 @@
 <script>
 	import carousel from '../sub/carousel.vue';
 	import newslist from '../sub/newslist.vue';
-	import article_data from '../../data/article.js';
 	import shop1 from '../sub/shop1.vue'
-	import product_data from '../../data/product.js';
 	import encyclopedias from '../sub/encyclopedias.vue'
-	import encyclopedias_data from '../../data/encyclopedias.js';
 
 	export default {
 		name: "Home",
@@ -77,15 +74,32 @@
 		},
 		data() {
 			return {
-				newsList: null,
-				productList: null,
-				encyclopediasList: null
+				newsList: [],
+				productList: [],
+				encyclopediasList: [],
+				contentList: []
 			};
 		},
+		methods: {
+
+		},
 		created() {
-			this.newsList = article_data;
-			this.productList = product_data;
-			this.encyclopediasList = encyclopedias_data;
+			this.axios.get("http://localhost:3000/article/list").then(
+				res => {
+					this.newsList = res.data.list;
+				});
+			this.axios.get("http://localhost:3000/product/list").then(
+				res => {
+					this.productList = res.data.list;
+				});
+			this.axios.get("http://localhost:3000/encyclopedia/list").then(
+				res => {
+					this.encyclopediasList = res.data.list;
+				});
+			this.axios.get("http://localhost:3000/encyclopedia/detaillist").then(
+				res => {
+					this.contentList = res.data.list;
+				});
 		}
 	};
 </script>

@@ -2,7 +2,7 @@
 	<div class="shop2">
 		<div @click="gotoProduct(product.id)">
 			<div class="img">
-				<img :src="product.img" alt="图片丢失">
+				<img :src="getpath(product.img)" alt="图片丢失">
 			</div>
 			<div class="info">
 				<div class="name">{{ product && product.name }}</div>
@@ -26,6 +26,9 @@
 		methods: {
 			gotoProduct(id) {
 				this.$router.push('/productdetail/' + id)
+			},
+			getpath(img) {
+				return require('@/imgs/' + img);
 			}
 		}
 	}

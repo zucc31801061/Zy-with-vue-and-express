@@ -53,7 +53,7 @@
 		background: #a98175;
 		height: 46px;
 		text-align: left;
-		z-index: 5;
+		z-index: 99;
 	}
 
 	.el-avatar {
