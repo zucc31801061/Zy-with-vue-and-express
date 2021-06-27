@@ -4,7 +4,7 @@
 			<i class="el-icon-s-management zxi"></i>
 			<div class="lt">中医资讯</div>
 		</div>
-		<newslist v-for="news in newsList" :key="news.id" :news="news"></newslist>
+		<newslist v-for="news in newsList.list" :key="news.id" :news="news"></newslist>
 		<div class="info">
 			<div class="copyrignt">&copy; 2021 移动应用交互设计 zucc 31801061 王灵霜</div>
 		</div>
@@ -14,7 +14,6 @@
 
 <script>
 	import newslist from '../sub/newslist.vue'
-	import article_data from '../../data/article.js';
 
 	export default {
 		name: "News",
@@ -23,11 +22,15 @@
 		},
 		data() {
 			return {
-				newsList: null
+				newsList: {}
 			};
 		},
 		created() {
-			this.newsList=article_data
+			this.axios.get("http://localhost:3000/article/list").then(
+				res => {
+					this.newsList = res.data;
+					console.log(this.newsList);
+				})
 		}
 	};
 </script>
@@ -43,25 +46,25 @@
 		padding-left: 10px;
 		float: left;
 	}
-	
-	.info{
+
+	.info {
 		height: 80px;
 		background-image: url(../../imgs/info.png);
 		font-size: 12px;
 		text-align: ;
 	}
-	
-	.copyrignt{
+
+	.copyrignt {
 		padding-top: 55px;
 		color: #808080;
 	}
-	
+
 	.lt {
 		margin-left: 32px;
 		line-height: 30px;
 		height: 30px;
 	}
-	
+
 	.zxi {
 		float: left;
 		color: #1A44A0;

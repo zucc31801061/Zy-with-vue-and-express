@@ -1,21 +1,21 @@
 <template>
 	<div class="articlepage">
 		<div class="back" @click="back()"><u>返回上一页></u></div>
-		<div class="articledetail" v-for="item in this.newsList" v-if="$route.params.id == item.id">
-			<div class="atitle">{{ item && item.title }}</div>
-			<div class="time">{{ item.time }}</div>
-			<div class="img">
-				<img :src="item.cover" alt="图片丢失">
+		<div class="articledetail">
+			<div v-for="item in this.newsList.list" v-if="$route.params.id == item.id">
+				<div class="atitle">{{ item && item.title }}</div>
+				<div class="time">{{ getdate(item.time) }}</div>
+				<div class="img">
+					<img :src="getpath(item.cover)" alt="图片丢失">
+				</div>
 			</div>
-			<div class="content">
-				<p v-for="p in item.content">{{ p }}</p><br>
-			</div>
+			<p v-for="p in this.contentList.list">{{ p.section }}</p><br>
 		</div>
 		<div class="other">
-			<div class="oarticle" v-for="item in this.newsList" v-if="$route.params.id == item.id + 1">
+			<div class="oarticle" v-for="item in this.newsList.list" v-if="$route.params.id == item.id + 1">
 				<div class="otitle" @click="goto(item.id)">上一篇：{{item && item.title}}</div>
 			</div>
-			<div class="oarticle" v-for="item in this.newsList" v-if="$route.params.id == item.id - 1">
+			<div class="oarticle" v-for="item in this.newsList.list" v-if="$route.params.id == item.id - 1">
 				<div class="otitle" @click="goto(item.id)">下一篇：{{item && item.title}}</div>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 			<div class="title">
 				相关推荐
 			</div>
-			<newslist v-for="news in newsList" v-if="news.id != $route.params.id" :key="news.id" :news="news">
+			<newslist v-for="news in newsList.list" v-if="news.id != $route.params.id" :key="news.id" :news="news">
 			</newslist>
 		</div>
 		<el-backtop style="bottom: 80px;"></el-backtop>
@@ -32,7 +32,6 @@
 
 <script>
 	import newslist from '../sub/newslist.vue'
-	import article_data from '../../data/article.js';
 
 	export default {
 		name: 'articlepage',
@@ -41,7 +40,8 @@
 		},
 		data() {
 			return {
-				newsList: null
+				newsList: {},
+				contentList: {}
 			};
 		},
 		methods: {
@@ -50,10 +50,28 @@
 			},
 			back() {
 				this.$router.go(-1);
+			},
+			getpath(cover) {
+				return require('@/imgs/' + cover);
+			},
+			getdate(time) {
+				var year = (new Date(time)).getFullYear();
+				var month = (new Date(time)).getMonth() + 1;
+				var date = (new Date(time)).getDate();
+				return year + "年" + month + "月" + date + "日";
 			}
 		},
 		created() {
-			this.newsList = article_data
+			this.axios.get("http://localhost:3000/article/list").then(
+				res => {
+					this.newsList = res.data;
+					console.log(this.newsList);
+				});
+			this.axios.get("http://localhost:3000/article/detail?id=" + this.$route.params.id).then(
+				res => {
+					this.contentList = res.data;
+					console.log(this.contentList);
+				});
 		}
 	}
 </script>

@@ -7,11 +7,16 @@ import Routers from './router';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Vuex from 'vuex'
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import qs from 'qs';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.prototype.axios = axios;
+Vue.prototype.qs = qs;
 
 // 路由配置
 const RouterConfig = {

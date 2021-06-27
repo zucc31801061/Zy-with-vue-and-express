@@ -2,11 +2,11 @@
 	<div class="newslist">
 		<div class="item" @click="gotoArticle(news.id)">
 			<div class="news-cover">
-				<img :src="news.cover" alt="图片丢失">
+				<img :src="getpath(news.cover)" alt="图片丢失">
 			</div>
 			<div class="info">
 				<div class="news-title">{{ news && news.title }}</div>
-				<div class="news-time">{{ news.time }}</div>
+				<div class="news-time">{{ getdate(news.time) }}</div>
 			</div>
 		</div>
 	</div>
@@ -21,6 +21,15 @@
 		methods: {
 			gotoArticle(id) {
 				this.$router.push('/articledetail/' + id)
+			},
+			getpath(cover){
+				return require('@/imgs/'+cover);
+			},
+			getdate(time){
+				var year = (new Date(time)).getFullYear();
+				var month = (new Date(time)).getMonth() + 1;
+				var date = (new Date(time)).getDate();
+				return year+"年"+month+"月"+date+"日";
 			}
 		}
 	}
