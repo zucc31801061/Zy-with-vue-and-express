@@ -1,11 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import App from './App';
 import VueRouter from 'vue-router';
 import Routers from './router';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import Vuex from 'vuex'
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -21,7 +21,7 @@ Vue.prototype.qs = qs;
 // 路由配置
 const RouterConfig = {
 	// 使用 HTML5 的 History 路由模式
-	mode: 'history',
+	// mode: 'history',
 	routes: Routers,
 	scrollBehavior(to, from, savedPosition) {
 		if (savedPosition) {
