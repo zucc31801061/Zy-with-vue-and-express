@@ -1,6 +1,6 @@
 <template>
 	<div class="topbar">
-		<div v-if="this.username=='初始'">
+		<div v-if="this.user==null">
 			<el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
 			<el-col :span="12">
 				<el-dropdown trigger="click">
@@ -14,9 +14,9 @@
 				</el-dropdown>
 			</el-col>
 		</div>
-		<div class="welcome" v-if="this.username!='初始'">
+		<div class="welcome" v-if="this.user!=null">
 			<span>
-				你好，{{username}}
+				你好，{{user.realname}}
 			</span>
 			<button @click="quit()">注销</button>
 		</div>
@@ -27,7 +27,7 @@
 	export default {
 		name: "topbar",
 		props:{
-			username: String
+			user: JSON
 		},
 		methods: {
 			tologin() {
@@ -37,8 +37,11 @@
 				this.$router.push('/register')
 			},
 			quit(){
-				localStorage.setItem("username", '初始');
+				localStorage.setItem("user", null);
 			}
+		},
+		mounted(){
+			console.log(this.user);
 		}
 	}
 </script>

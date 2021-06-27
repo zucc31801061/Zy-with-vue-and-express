@@ -80,10 +80,21 @@
 			handleregister(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						localStorage.setItem("username", this.Form.id);
-						this.$router.push({
-							path: '/home',
-						});
+						this.axios.get("http://localhost:3000/users/register?username="+this.Form.id+"&pwd="+this.Form.pwd).then(
+							res => {
+								if(res.data.code==200){
+									this.$message({
+										type: 'success',
+										message: res.data.msg
+									});
+								}
+								else{
+									this.$message({
+										type: 'error',
+										message: res.data.msg
+									});
+								}
+							});
 					} else {
 						console.log('error submit!!');
 						return false;

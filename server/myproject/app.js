@@ -1,6 +1,7 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
+var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 
 var indexRouter = require("./routes/index");
@@ -13,6 +14,7 @@ var app = express();
 
 //改写
 var http = require("http");
+const { urlencoded } = require("body-parser");
 var server = http.createServer(app);
 
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +30,12 @@ app.all("*", function (req, res, next) {
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
 });
+
+//静态资源
+app.use(express.static(path.join(__dirname, 'public')));
+
+//post请求
+app.use(urlencoded({extended: true}));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

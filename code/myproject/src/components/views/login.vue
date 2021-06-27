@@ -64,10 +64,20 @@
 			handlelogin(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						localStorage.setItem("username", this.Form.id);
-						this.$router.push({
-							path: '/home',
-						});
+						this.axios.get("http://localhost:3000/users/select?username="+this.Form.id).then(
+							res => {
+								var user = res.data.list[0];
+								if(user.pwd==this.Form.pwd){
+									localStorage.setItem("user", JSON.stringify(user));
+									this.$router.push({
+										path: '/home',
+									});
+									console.log("true");
+								}
+								else{
+									console.log("false");
+								}
+							});
 					} else {
 						console.log('error submit!!');
 						return false;

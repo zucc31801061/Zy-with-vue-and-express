@@ -5,8 +5,8 @@
 				<el-avatar :size="60" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png">
 				</el-avatar>
 			</div>
-			<div class="name" v-if="this.username=='初始'">还未登录</div>
-			<div class="name" v-if="this.username!='初始'">{{username}}</div>
+			<div class="name" v-if="this.user==null">还未登录</div>
+			<div class="name" v-if="this.user!=null">{{user.realname}}</div>
 		</div>
 		<div class="model">
 			<div class="item">
@@ -36,7 +36,7 @@
 	export default {
 		name: "user",
 		props: {
-			username: String
+			user: JSON
 		},
 		data() {
 			return {

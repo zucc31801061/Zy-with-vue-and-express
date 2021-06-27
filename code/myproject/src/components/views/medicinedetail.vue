@@ -36,12 +36,10 @@
 			this.axios.get("http://localhost:3000/encyclopedia/select?id="+this.$route.params.id).then(
 				res => {
 					this.encyclopedias = res.data.list[0];
-					console.log(this.encyclopedias);
 				});
 			this.axios.get("http://localhost:3000/encyclopedia/detail?id="+this.$route.params.id).then(
 				res => {
 					this.contentList = res.data.list;
-					console.log(this.contentList);
 				});
 		}
 	}

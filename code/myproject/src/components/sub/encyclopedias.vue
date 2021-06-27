@@ -29,7 +29,6 @@
 				return require('@/imgs/' + img);
 			},
 			forcontent(id){
-				console.log("id:"+id);
 				for(let content in this.contentList){
 					if(id==this.contentList[content].ency_id){
 						let result = this.contentList[content].section.length>18?this.contentList[content].section.substr(2,18):this.contentList[content].section;

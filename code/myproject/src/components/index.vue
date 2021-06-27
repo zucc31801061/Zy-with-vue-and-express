@@ -1,8 +1,8 @@
 <template>
 	<div class="index">
-		<topbar :username="username"></topbar>
+		<topbar :user="user"></topbar>
 		<el-main>
-			<router-view :key="$route.fullPath" :username="username">
+			<router-view :key="$route.fullPath" :user="user">
 			</router-view>
 		</el-main>
 		<navbar></navbar>
@@ -21,7 +21,7 @@
 		},
 		data() {
 			return {
-				username: '初始'
+				user: null
 			};
 		},
 		methods: {
@@ -29,8 +29,9 @@
 		},
 		watch: {
 			$route: function(newVal, oldVal) {
-				if (localStorage.getItem("username") != null) {
-					this.username = localStorage.getItem("username");
+				if (localStorage.getItem("user") != null) {
+					this.user = JSON.parse(localStorage.getItem("user"));
+					console.log(typeof(this.user));
 				}
 				document.documentElement.scrollTop = 0;
 				document.body.scrollTop = 0;
