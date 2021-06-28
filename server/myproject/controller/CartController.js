@@ -19,8 +19,7 @@ select = (req, res) => {
       } else {
         res.send({
           code: 400,
-          msg: "该商品不存在",
-          list: data,
+          msg: "该商品不存在"
         });
       }
     }
@@ -37,8 +36,7 @@ getCartId = (req, res) => {
     if (err) {
       res.send({
         code: 400,
-        msg: "无此购物车",
-        list: data,
+        msg: "无此购物车"
       });
     } else {
       if (data.length != 0) {
@@ -50,8 +48,7 @@ getCartId = (req, res) => {
       } else {
         res.send({
           code: 400,
-          msg: "无此购物车",
-          list: data,
+          msg: "无此购物车"
         });
       }
     }

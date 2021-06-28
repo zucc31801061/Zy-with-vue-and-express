@@ -19,7 +19,6 @@ getByUsername = (req, res) => {
         res.send({
           code: 400,
           msg: "该用户不存在",
-          list: data,
         });
       }
     }
@@ -38,13 +37,12 @@ register = (req, res) => {
       console.log("用户名已存在");
       res.send({
         code: 400,
-        msg: "用户名已存在",
+        msg: "用户名已存在"
       });
     } else {
       res.send({
         code: 200,
-        msg: "注册成功",
-        list: data,
+        msg: "注册成功"
       });
     }
   };

@@ -52,9 +52,7 @@ getEncyDetail = (req, res) => {
 
 //获取详细内容列表
 getEncyDetailList = (req, res) => {
-  let { id } = req.query;
   var sql = "select * from ency_detail";
-  var sqlArr = [id];
   var callBack = (err, data) => {
     if (err) {
       console.log("百科内容获取失败");

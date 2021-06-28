@@ -6,7 +6,7 @@ getProductList = (req, res) => {
   var sqlArr = [];
   var callBack = (err, data) => {
     if (err) {
-      console.log("新闻列表获取失败");
+      console.log("商品列表获取失败");
     } else {
       res.send({
         list: data,
