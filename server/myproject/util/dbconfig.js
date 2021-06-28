@@ -7,11 +7,13 @@ const config = {
   user: "root",
   password: "123456",
   database: "zyserver",
+  multipleStatements: true
 };
 
 //连接数据库，使用mysql的连接池连接方式
 var pool = mysql.createPool(config);
 module.exports = {
+  pool: pool,
   //连接池对象
   sqlConnect: function (sql, sqlArr, callBack) {
     pool.getConnection((err, conn) => {

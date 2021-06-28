@@ -103,7 +103,7 @@
 
 	.info {
 		width: 100%;
-		margin-top: 136px;
+		margin-top: 247px;
 		height: 80px;
 		background-image: url(../../imgs/info.png);
 		font-size: 12px;

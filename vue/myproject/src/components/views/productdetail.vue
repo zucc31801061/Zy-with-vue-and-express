@@ -30,7 +30,7 @@
 				<i class="el-icon-sell navi"></i>
 				<div slot="ptitle">商城</div>
 			</div>
-			<div class="nbuy">
+			<div class="nbuy" @click="add($route.params.id)">
 				<i class="el-icon-shopping-cart-2 navi bi"></i>
 				加入购物车
 			</div>
@@ -51,7 +51,8 @@
 		},
 		data() {
 			return {
-				productList: []
+				productList: [],
+				user: null
 			};
 		},
 		methods: {
@@ -68,6 +69,68 @@
 			},
 			getpath(img) {
 				return require('@/imgs/' + img);
+			},
+			add(id) {
+				if (this.user != null) {
+					this.axios.get("http://localhost:3000/cart/getcartid?username=" + this.user.username).then(
+						res => {
+							if (res.data.code == 200) {
+								var cartid = res.data.list[0].id;
+								this.axios.get("http://localhost:3000/cart/select?productid=" + id + "&cartid=" +
+										cartid)
+									.then(
+										res => {
+											if (res.data.code == 200) {
+												//add
+												this.axios.get("http://localhost:3000/cart/add?productid=" + id +
+													"&cartid=" + cartid).then(
+													res => {
+														if (res.data.code == 200) {
+															//add
+															this.$message({
+																type: 'success',
+																message: '添加成功'
+															});
+														} else {
+															this.$message({
+																type: 'error',
+																message: '添加失败'
+															});
+														}
+													})
+											} else {
+												//insert
+												this.axios.get("http://localhost:3000/cart/insert?productid=" + id +
+													"&cartid=" + cartid).then(
+													res => {
+														if (res.data.code == 200) {
+															//add
+															this.$message({
+																type: 'success',
+																message: '添加成功'
+															});
+														} else {
+															this.$message({
+																type: 'error',
+																message: '添加失败'
+															});
+														}
+													})
+											}
+										})
+							} else {
+								this.$message({
+									type: 'error',
+									message: '您还未登录'
+								});
+							}
+						})
+				} else {
+					this.$message({
+						type: 'error',
+						message: '您还未登录'
+					});
+				}
 			}
 		},
 		created() {
@@ -75,7 +138,11 @@
 				res => {
 					this.productList = res.data.list;
 					console.log(this.productList);
-				})
+				});
+			if (localStorage.getItem("user") != null) {
+				this.user = JSON.parse(localStorage.getItem("user"));
+				console.log(typeof(this.user));
+			}
 		}
 	}
 </script>

@@ -12,14 +12,14 @@
 			<div class="lt">热卖中</div>
 		</div>
 		<div class="recommend">
-			<shop1 v-for="product in productList.slice(0,2)" :key="product.id" :product="product"></shop1>
+			<shop1 v-for="product in productList.slice(0,2)" :key="product.id" :product="product" :user="user"></shop1>
 		</div>
 		<div class="title-1">
 			<i class="el-icon-s-cooperation ai"></i>
 			<div class="lt">所有商品</div>
 		</div>
 		<div class="all">
-			<shop2 v-for="product in productList.slice(2)" :key="product.id" :product="product"></shop2>
+			<shop2 v-for="product in productList.slice(2)" :key="product.id" :product="product" :user="user"></shop2>
 		</div>
 		<div class="info">
 			<div class="copyrignt">&copy; 2021 移动应用交互设计 zucc 31801061 王灵霜</div>
@@ -37,6 +37,9 @@
 		components: {
 			shop1,
 			shop2
+		},
+		props: {
+			user: Object
 		},
 		data() {
 			return {

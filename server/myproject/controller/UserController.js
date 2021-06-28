@@ -31,8 +31,8 @@ getByUsername = (req, res) => {
 register = (req, res) => {
   let username = req.query.username;
   let pwd = req.query.pwd;
-  var sql = "insert into user (username,pwd) values(?,?)";
-  var sqlArr = [username, pwd];
+  var sql = "insert into user (username,pwd) values(?,?);insert into cart (username) values(?);";
+  var sqlArr = [username, pwd, username];
   var callBack = (err, data) => {
     if (err) {
       console.log("用户名已存在");

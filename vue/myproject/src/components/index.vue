@@ -31,7 +31,6 @@
 			$route: function(newVal, oldVal) {
 				if (localStorage.getItem("user") != null) {
 					this.user = JSON.parse(localStorage.getItem("user"));
-					console.log(typeof(this.user));
 				}
 				document.documentElement.scrollTop = 0;
 				document.body.scrollTop = 0;

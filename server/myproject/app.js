@@ -9,6 +9,7 @@ var usersRouter = require("./routes/users");
 var articleRouter = require("./routes/article");
 var productRouter = require("./routes/product");
 var encyclopediaRouter = require("./routes/encyclopedia");
+var cartRouter = require("./routes/cart");
 
 var app = express();
 
@@ -42,5 +43,6 @@ app.use("/users", usersRouter);
 app.use("/article", articleRouter);
 app.use("/product", productRouter);
 app.use("/encyclopedia", encyclopediaRouter);
+app.use("/cart", cartRouter);
 
 server.listen(3000);

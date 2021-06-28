@@ -27,7 +27,7 @@
 	export default {
 		name: "topbar",
 		props:{
-			user: JSON
+			user: Object
 		},
 		methods: {
 			tologin() {

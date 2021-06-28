@@ -39,7 +39,7 @@
 			<div class="lt">中医商城</div>
 		</div>
 		<div class="shop">
-			<shop1 v-for="product in productList.slice(0,2)" :key="product.id" :product="product"></shop1>
+			<shop1 v-for="product in productList.slice(0,2)" :key="product.id" :product="product" :user="user"></shop1>
 		</div>
 		<div class="title">
 			<i class="el-icon-s-management zxi"></i>
@@ -66,6 +66,9 @@
 
 	export default {
 		name: "Home",
+		props: {
+			user: Object
+		},
 		components: {
 			carousel,
 			newslist,

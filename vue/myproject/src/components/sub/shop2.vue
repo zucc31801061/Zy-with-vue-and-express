@@ -1,16 +1,14 @@
 <template>
 	<div class="shop2">
-		<div @click="gotoProduct(product.id)">
-			<div class="img">
-				<img :src="getpath(product.img)" alt="图片丢失">
-			</div>
-			<div class="info">
-				<div class="name">{{ product && product.name }}</div>
-				<div class="buy">
-					<div class="price">￥{{ product.price }}</div>
-					<div class="buyicon">
-						<i class="el-icon-shopping-cart-2"></i>
-					</div>
+		<div class="img" @click="gotoProduct(product.id)">
+			<img :src="getpath(product.img)" alt="图片丢失">
+		</div>
+		<div class="info">
+			<div class="name">{{ product && product.name }}</div>
+			<div class="buy">
+				<div class="price">￥{{ product.price }}</div>
+				<div class="buyicon" @click="add(product.id)">
+					<i class="el-icon-shopping-cart-2"></i>
 				</div>
 			</div>
 		</div>
@@ -21,7 +19,8 @@
 	export default {
 		name: 'product',
 		props: {
-			product: Object
+			product: Object,
+			user: Object
 		},
 		methods: {
 			gotoProduct(id) {
@@ -29,6 +28,68 @@
 			},
 			getpath(img) {
 				return require('@/imgs/' + img);
+			},
+			add(id) {
+				if (this.user != null) {
+					this.axios.get("http://localhost:3000/cart/getcartid?username=" + this.user.username).then(
+						res => {
+							if (res.data.code == 200) {
+								var cartid = res.data.list[0].id;
+								this.axios.get("http://localhost:3000/cart/select?productid=" + id + "&cartid=" +
+										cartid)
+									.then(
+										res => {
+											if (res.data.code == 200) {
+												//add
+												this.axios.get("http://localhost:3000/cart/add?productid=" + id +
+													"&cartid=" + cartid).then(
+													res => {
+														if (res.data.code == 200) {
+															//add
+															this.$message({
+																type: 'success',
+																message: '添加成功'
+															});
+														} else {
+															this.$message({
+																type: 'error',
+																message: '添加失败'
+															});
+														}
+													})
+											} else {
+												//insert
+												this.axios.get("http://localhost:3000/cart/insert?productid=" + id +
+													"&cartid=" + cartid).then(
+													res => {
+														if (res.data.code == 200) {
+															//add
+															this.$message({
+																type: 'success',
+																message: '添加成功'
+															});
+														} else {
+															this.$message({
+																type: 'error',
+																message: '添加失败'
+															});
+														}
+													})
+											}
+										})
+							} else {
+								this.$message({
+									type: 'error',
+									message: '您还未登录'
+								});
+							}
+						})
+				} else {
+					this.$message({
+						type: 'error',
+						message: '您还未登录'
+					});
+				}
 			}
 		}
 	}

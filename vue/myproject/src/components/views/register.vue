@@ -59,15 +59,29 @@
 				},
 				rules: {
 					id: [{
-						required: true,
-						message: '请输入用户名',
-						trigger: 'blur'
-					}],
+							required: true,
+							message: '请输入用户名',
+							trigger: 'blur'
+						},
+						{
+							required: true,
+							pattern: /^\d{6,8}$/,
+							message: '请输入6~8位数字',
+							trigger: 'blur'
+						}
+					],
 					pwd: [{
-						required: true,
-						message: '请输入密码',
-						trigger: 'blur'
-					}],
+							required: true,
+							message: '请输入密码',
+							trigger: 'blur'
+						},
+						{
+							min: 6,
+							max: 15,
+							message: '长度在6到15位',
+							trigger: 'blur'
+						}
+					],
 					cfpwd: [{
 						required: true,
 						validator: validatePassword,
@@ -80,15 +94,15 @@
 			handleregister(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						this.axios.get("http://localhost:3000/users/register?username="+this.Form.id+"&pwd="+this.Form.pwd).then(
+						this.axios.get("http://localhost:3000/users/register?username=" + this.Form.id + "&pwd=" +
+							this.Form.pwd).then(
 							res => {
-								if(res.data.code==200){
+								if (res.data.code == 200) {
 									this.$message({
 										type: 'success',
 										message: res.data.msg
 									});
-								}
-								else{
+								} else {
 									this.$message({
 										type: 'error',
 										message: res.data.msg
