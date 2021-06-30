@@ -20,7 +20,6 @@ var server = http.createServer(app);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 //跨域
 app.all("*", function (req, res, next) {
@@ -33,7 +32,8 @@ app.all("*", function (req, res, next) {
 });
 
 //静态资源
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, 'public')));
+app.use('/public', express.static('public'));
 
 //post请求
 app.use(urlencoded({extended: true}));

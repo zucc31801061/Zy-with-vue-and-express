@@ -7,7 +7,7 @@ const config = {
   user: "root",
   password: "123456",
   database: "zyserver",
-  multipleStatements: true
+  multipleStatements: true,
 };
 
 //连接数据库，使用mysql的连接池连接方式
@@ -25,6 +25,27 @@ module.exports = {
       conn.query(sql, sqlArr, callBack);
       //释放连接
       conn.release();
+    });
+  },
+  SySqlConnect: function (sySql, sqlArr) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(function (err, conn) {
+        console.log("123");
+        if (err) {
+          reject(err);
+        } else {
+          conn.query(sySql, sqlArr, (err, data) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
+            conn.release();
+          });
+        }
+      });
+    }).catch((err) => {
+      console.log(err);
     });
   },
 };

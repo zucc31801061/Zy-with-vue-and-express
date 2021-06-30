@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cropperjs": "^1.5.12",
     "element-ui": "^2.15.2",
     "qs.js": "^0.1.12",
     "vue": "^2.5.2",

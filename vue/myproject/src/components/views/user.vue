@@ -1,12 +1,13 @@
 <template>
 	<div class="user">
-		<div class="nowlogin" @click="tologin()">
-			<div class="icon">
-				<el-avatar :size="60" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png">
-				</el-avatar>
-			</div>
-			<div class="name" v-if="this.user==null">还未登录</div>
-			<div class="name" v-if="this.user!=null">{{user.realname}}</div>
+		<div class="nowlogin">
+			<el-upload class="avatar-uploader icon" action="https://jsonplaceholder.typicode.com/posts/"
+				:show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+				<img v-if="imageUrl" :src="imageUrl" class="avatar">
+				<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+			</el-upload>
+			<div class="name" v-if="this.user==null" @click="tologin()">还未登录</div>
+			<div class="name" v-if="this.user!=null" @click="tologin()">{{user.realname}}</div>
 		</div>
 		<div class="model">
 			<div class="item">
@@ -36,17 +37,51 @@
 	export default {
 		name: "user",
 		props: {
-			user: JSON
+			user: Object
 		},
 		data() {
 			return {
-
+				imageUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 			};
 		},
 		methods: {
 			tologin() {
 				this.$router.push('/login')
 			},
+			handleAvatarSuccess(res, file) {
+				this.imageUrl = URL.createObjectURL(file.raw);
+			},
+			beforeAvatarUpload(file) {
+				const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+				const isLt2M = file.size / 1024 / 1024 < 2;
+
+				if (!isJPG) {
+					this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+				}
+				if (!isLt2M) {
+					this.$message.error('上传头像图片大小不能超过 2MB!');
+				}
+				let fd = new FormData();
+				fd.append("file", file);
+				this.axios.post("http://localhost:3000/users/editUserImg?username=" + this.user.username, fd).then(
+					res => {
+						this.imageUrl = res.data.url;
+						console.log(this.imageUrl);
+						this.axios.get("http://localhost:3000/users/select?username=" + this.user.username).then(
+							res => {
+								console.log(res.data);
+								if (res.data.code == 200) {
+									var usernew = res.data.list[0];
+									localStorage.setItem("user", JSON.stringify(usernew));
+									console.log(localStorage.getItem("user"));
+								}
+							});
+					});
+			}
+		},
+		mounted() {
+			console.log(this.user.headimg);
+			this.imageUrl = this.user.headimg;
 		}
 	}
 </script>
@@ -64,6 +99,12 @@
 
 	.icon {
 		float: left;
+	}
+
+	.icon img {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
 	}
 
 	.name {
@@ -103,7 +144,7 @@
 
 	.info {
 		width: 100%;
-		margin-top: 247px;
+		margin-top: 260px;
 		height: 80px;
 		background-image: url(../../imgs/info.png);
 		font-size: 12px;
