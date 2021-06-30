@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 28/06/2021 01:47:26
+ Date: 30/06/2021 17:21:11
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `article`  (
   `time` date NULL DEFAULT NULL,
   `cover` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
@@ -148,31 +148,38 @@ INSERT INTO `article_detail` VALUES (71, 8, '　　（来源：现代快报网�
 -- ----------------------------
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart`  (
-  `id` int NOT NULL,
-  `user_id` int NULL DEFAULT NULL,
-  `product_id` int NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
+INSERT INTO `cart` VALUES (1, '123456');
+INSERT INTO `cart` VALUES (2, '567891');
 
 -- ----------------------------
 -- Table structure for cart_num
 -- ----------------------------
 DROP TABLE IF EXISTS `cart_num`;
 CREATE TABLE `cart_num`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NULL DEFAULT NULL,
   `cart_id` int NULL DEFAULT NULL,
   `num` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart_num
 -- ----------------------------
+INSERT INTO `cart_num` VALUES (1, 1, 1, 5);
+INSERT INTO `cart_num` VALUES (2, 2, 1, 2);
+INSERT INTO `cart_num` VALUES (3, 3, 1, 3);
+INSERT INTO `cart_num` VALUES (4, 4, 1, 2);
+INSERT INTO `cart_num` VALUES (5, 1, 2, 2);
+INSERT INTO `cart_num` VALUES (6, 7, 1, 1);
 
 -- ----------------------------
 -- Table structure for ency_detail
@@ -183,7 +190,7 @@ CREATE TABLE `ency_detail`  (
   `ency_id` int NULL DEFAULT NULL,
   `section` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ency_detail
@@ -230,7 +237,7 @@ CREATE TABLE `encyclopedia`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of encyclopedia
@@ -282,7 +289,7 @@ CREATE TABLE `product`  (
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `price` decimal(10, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product
@@ -304,14 +311,17 @@ CREATE TABLE `user`  (
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `pwd` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `realname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `headimg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('123456', '123456', '小王');
-INSERT INTO `user` VALUES ('234567', '234567', NULL);
-INSERT INTO `user` VALUES ('345678', '345678', NULL);
+INSERT INTO `user` VALUES ('123456', '123456', '小王', 'http://192.168.43.178:3000/public/uploads/ocean.png');
+INSERT INTO `user` VALUES ('234567', '234567', NULL, NULL);
+INSERT INTO `user` VALUES ('345678', '345678', NULL, NULL);
+INSERT INTO `user` VALUES ('456789', '456789', NULL, NULL);
+INSERT INTO `user` VALUES ('567891', '567891', '小陈', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
